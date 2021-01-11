@@ -5,6 +5,7 @@ Program by Andrew Cai
 1/2021
 
 Input the non-empty set I, output Naruse-Newton coefficients corresponding to I
+
 Can check unimodality
 Can print if each coefficient is greater, less, or equal than the next
 Can print rounded ratios between i and (i+1)th Naruse-Newton coefficients
