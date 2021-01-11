@@ -10,5 +10,4 @@ Can check unimodality, can print if each coefficient is greater, less, or equal 
 
 Can also compute Naruse-Newton coefficients of all I such that |I|<=7
 
-Bypasses int/long limit
-Time complexity is O(prod(i : I)^2/max(I)^2) -- square of the product of all elements of I except the largest
+Bypasses int/long limit, time complexity is O(prod(i : I)^2/max(I)^2) -- square of the product of all elements of I except the largest
