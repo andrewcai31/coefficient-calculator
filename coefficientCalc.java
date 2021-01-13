@@ -27,23 +27,18 @@ public class coefficientCalc {
 		
 		oneSeq();
 		
+		// printCoeffSmall();
 		printCoeffLarge();
 		printRatios();
 		printOrder();
 		isUnimodal();
-	}
-	
-	public static void oneSeq() { // input elements of I
-		int size = input.nextInt(); // cardinality of non-empty I
-		int[] elements = new int[size]; // elements of I (positive integers, increasing order)
-		for (int i=0; i<size; i++) elements[i] = input.nextInt();
-		Arrays.sort(elements);
 		
-		computeCoeff(elements);
+		// smallSets();
 	}
 	
 	public static void smallSets() { // computes coefficients for all I such that |I|<=7
 		int[] elements;
+		System.out.println("Naruse-Newton Coefficients for |I|<=7: ");
 		for (int i=1; i<=127; i++) {
 			ArrayList<Integer> temp = new ArrayList<Integer>();
 			String s = Integer.toBinaryString(i);
@@ -61,6 +56,17 @@ public class coefficientCalc {
 			computeCoeff(elements);
 			printCoeffSmall();
 		}
+	}
+	
+	public static void oneSeq() { // input elements of I
+		System.out.println("Please enter |I|: ");
+		int size = input.nextInt(); // cardinality of non-empty I
+		System.out.println("Please enter the elements of I, space-separated: ");
+		int[] elements = new int[size]; // elements of I (positive integers, increasing order)
+		for (int i=0; i<size; i++) elements[i] = input.nextInt();
+		Arrays.sort(elements);
+		
+		computeCoeff(elements);
 	}
 	
 	public static void computeCoeff(int[] elements) { // compute naruse-newton coeff. corresponding to I
@@ -134,18 +140,27 @@ public class coefficientCalc {
 		}
 	}
 	
-	public static void isUnimodal() { // check unimodality
-		boolean ret = true;
-		for (int i=1; i<s; i++) {
-			if (naruse[i].compareTo(naruse[i-1])<0 && naruse[i].compareTo(naruse[i+1])<0) ret = false;
+	public static void printCoeffSmall() { // print coefficient sequence, better for small numbers
+		System.out.print("Coefficients: ");
+		for (int i=0; i<s+1; i++) {
+			System.out.print(naruse[i] + " ");
 		}
-		if (ret) System.out.print("is");
-		else System.out.print("not");
-		System.out.println(" unimodal");
+		System.out.println();
+		System.out.println();
+	}
+	
+	public static void printCoeffLarge() { // print coefficient sequence, better for large numbers
+		System.out.println();
+		for (int i=0; i<s+1; i++) {
+			String str = String.format("%02d", i);
+			System.out.println("C_" + str + " = " + naruse[i]);
+		}
 	}
 	
 	public static void printOrder() { // print if each coefficient is greater, less, equal to the next
 		ArrayList<Integer> GreaterThanNext = new ArrayList<Integer>(); // holds the indices of the coefficients that are greater than that of the next index
+		if (s==0) return;
+		
 		System.out.println();
 		System.out.print("C_00");
 		for (int i=1; i<s+1; i++) {
@@ -170,26 +185,10 @@ public class coefficientCalc {
 		*/
 	}
 	
-	public static void printCoeffSmall() { // print coefficient sequence, better for small numbers
-		System.out.print("Coefficients: ");
-		for (int i=0; i<s+1; i++) {
-			System.out.print(naruse[i] + " ");
-		}
-		System.out.println();
-		System.out.println();
-	}
-	
-	public static void printCoeffLarge() { // print coefficient sequence, better for large numbers
-		System.out.println();
-		for (int i=0; i<s+1; i++) {
-			String str = String.format("%02d", i);
-			System.out.println("C_" + str + " = " + naruse[i]);
-		}
-	}
-	
 	public static void printRatios() { // print ratios between i and (i+1)th coefficients
-		System.out.println();
+		if (s==0) return;
 		
+		System.out.println();
 		BigDecimal[] narusedec = new BigDecimal[s+1];
 		for (int i=0; i<s+1; i++) {
 			narusedec[i] = new BigDecimal(naruse[i]);
@@ -200,5 +199,14 @@ public class coefficientCalc {
 			String str2 = String.format("%02d", i+1);
 			System.out.println("C_" + str1 + "/C_" + str2+ " = " + narusedec[i].divide(narusedec[i+1], 12, RoundingMode.HALF_UP));
 		}
+	}
+	
+	public static void isUnimodal() { // check unimodality
+		boolean ret = true;
+		for (int i=1; i<s; i++) {
+			if (naruse[i].compareTo(naruse[i-1])<0 && naruse[i].compareTo(naruse[i+1])<0) ret = false;
+		}
+		if (ret) System.out.print("The sequence is unimodal.");
+		else System.out.print("The sequence is NOT unimodal.");
 	}
 }
